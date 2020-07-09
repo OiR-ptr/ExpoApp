@@ -3,12 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { combineReducers, createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import GameReducer from "hit_and_blow/src/reducers/GameReducer";
+import GameScreen from "./src/GameScreenTop";
 
 function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-      <Text>majikayo fuck!, FBI Openup!</Text>
+      <GameScreen />
     </View>
   );
 }
