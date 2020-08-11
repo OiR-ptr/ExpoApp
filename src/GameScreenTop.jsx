@@ -1,9 +1,7 @@
-import React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import Number0 from "./_images/number_0.png";
-import { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import Number0 from "./_images/number_0.png";
 import { initializeGameruleEvent } from "hit_and_blow/src/actions/GameActions";
 
 const styles = StyleSheet.create({
