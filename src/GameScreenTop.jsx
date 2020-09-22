@@ -1,34 +1,81 @@
 import React, { useEffect, useCallback } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import Number0 from "./_images/number_0.png";
-import { initializeGameruleEvent } from "hit_and_blow/src/actions/GameActions";
+import { View, StyleSheet, Picker, Button } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkNumbersEvent,
+  initializeGameruleEvent,
+  setNumberEvent,
+} from "hit_and_blow/src/actions/GameActions";
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
-  },
-  tinyLogo: {
-    width: 50,
-    height: 50,
+    flexDirection: "row",
   },
 });
 
+const NumberPicker = (props) => {
+  const { number, onUpdateValue } = props;
+
+  return (
+    <Picker
+      style={{ width: 75 }}
+      selectedValue={number}
+      onValueChange={onUpdateValue}
+    >
+      <Picker.Item label="0" value="0" />
+      <Picker.Item label="1" value="1" />
+      <Picker.Item label="2" value="2" />
+      <Picker.Item label="3" value="3" />
+      <Picker.Item label="4" value="4" />
+      <Picker.Item label="5" value="5" />
+      <Picker.Item label="6" value="6" />
+      <Picker.Item label="7" value="7" />
+      <Picker.Item label="8" value="8" />
+      <Picker.Item label="9" value="9" />
+    </Picker>
+  );
+};
+
 const GameScreen = (props) => {
-  const { initializeGameRule } = props;
+  const { initializeGameRule, dial, setNumber, checkNumbers } = props;
   useEffect(() => {
     initializeGameRule(4, 9, false);
   }, [initializeGameRule]);
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.tinyLogo} source={Number0} />
-    </View>
+    <>
+      <View style={styles.container}>
+        <NumberPicker
+          number={dial[0]}
+          onUpdateValue={(val) => setNumber(Number(val), 0)}
+        />
+        <NumberPicker
+          number={dial[1]}
+          onUpdateValue={(val) => setNumber(Number(val), 1)}
+        />
+        <NumberPicker
+          number={dial[2]}
+          onUpdateValue={(val) => setNumber(Number(val), 2)}
+        />
+        <NumberPicker
+          number={dial[3]}
+          onUpdateValue={(val) => setNumber(Number(val), 3)}
+        />
+      </View>
+      <Button
+        title="Check"
+        onPress={() => checkNumbers(dial.map((value) => Number(value)))}
+      ></Button>
+    </>
   );
 };
 
 const useStateProps = () => {
-  return {};
+  const dial = useSelector((state) => {
+    return state.game.dial;
+  });
+
+  return { dial };
 };
 
 const useDispatchProps = () => {
@@ -41,8 +88,24 @@ const useDispatchProps = () => {
     [dispatch]
   );
 
+  const setNumber = useCallback(
+    (number, position) => {
+      dispatch(setNumberEvent(number, position));
+    },
+    [dispatch]
+  );
+
+  const checkNumbers = useCallback(
+    (numbers) => {
+      dispatch(checkNumbersEvent(numbers));
+    },
+    [dispatch]
+  );
+
   return {
     initializeGameRule,
+    setNumber,
+    checkNumbers,
   };
 };
 

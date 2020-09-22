@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "expo": "~37.0.3",
+    "expo-constants": "^9.1.1",
     "hit_and_blow": "file:hit_and_blow",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",

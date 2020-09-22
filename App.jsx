@@ -1,29 +1,31 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { combineReducers, createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import GameReducer from "hit_and_blow/src/reducers/GameReducer";
 import GameScreen from "./src/GameScreenTop";
-
-function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <GameScreen />
-    </View>
-  );
-}
+import Constants from "expo-constants";
+import { default as HistoryLog } from "./src/HistoryLog";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
 });
 
-const createRootReducer = (objHistory) => {
+function App() {
+  return (
+    <SafeAreaView style={{ flex: 1, marginTop: Constants.statusBarHeight }}>
+      <View style={styles.container}>
+        <GameScreen />
+        <HistoryLog />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const createRootReducer = () => {
   return combineReducers({
     game: GameReducer,
   });
